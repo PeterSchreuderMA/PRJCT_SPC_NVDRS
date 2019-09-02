@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private bool _canInput = false;
+    private bool _canInput = true;
 
     public void ChangeAllowInput(bool tempI)
     {
