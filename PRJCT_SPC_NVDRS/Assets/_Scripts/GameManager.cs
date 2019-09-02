@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void NextWave()
+    private void NextWave()
     {
         _waveNumber++;
         GameObject thisWave = Instantiate(_enemyBase);
@@ -56,5 +56,12 @@ public class GameManager : MonoBehaviour
                     0);
             }
         }
+        thisWave.GetComponent<EnemyBase>().ChildrenAmount = _waves[_waveNumber - 1]._xAmount * _waves[_waveNumber - 1]._yAmount;
+        thisWave.GetComponent<EnemyBase>().StartMoving();
+    }
+
+    public void NextWaveCaller()
+    {
+        StartCoroutine(WaveTimer());
     }
 }

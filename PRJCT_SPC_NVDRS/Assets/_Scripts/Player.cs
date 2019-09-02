@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         _canShoot = false;
         GameObject currentBullet = Instantiate(_bullet, transform);
         currentBullet.transform.parent = null;
+        currentBullet.transform.position += Vector3.up * .5f;
         yield return new WaitForSeconds(0.3f);
         _canShoot = true;
     }
