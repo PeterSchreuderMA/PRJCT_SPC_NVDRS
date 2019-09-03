@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
             _HP--;
             if (_HP <=0)
             {
-                gameObject.GetComponent<DramaticDeath>().StartDeath();
+                StartDeath();
                 GetComponentInParent<EnemyBase>().ChildDied();
             }
         }
@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour
 
     void StartDeath()
     {
+        gameObject.GetComponent<DramaticDeath>().StartDeath();
         OnEnemyDeath?.Invoke(10);
     }
 }

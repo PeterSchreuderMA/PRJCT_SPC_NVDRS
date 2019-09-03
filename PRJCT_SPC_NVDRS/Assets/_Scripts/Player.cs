@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
 
     // player stuff
     private float _speed;
+    private DramaticDeath _dramaticDeath;
+    public event Action OnPlayerDeath;
 
     // Fire
     public GameObject _bullet;
@@ -23,6 +26,9 @@ public class Player : MonoBehaviour
     {
         _input = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
         _soundEmitter = gameObject.GetComponent<SoundEmitterInit>();
+        _dramaticDeath = gameObject.GetComponent<DramaticDeath>();
+
+        OnPlayerDeath += GameObject.FindObjectOfType<GameManager>().PlayerDied;
 
         _speed = 5;
     }
@@ -76,7 +82,9 @@ public class Player : MonoBehaviour
 
     IEnumerator DeathAnim()
     {
-        yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+        _dramaticDeath.StartDeath();
+        OnPlayerDeath?.Invoke();
+        yield return new WaitForSeconds(0.01f);
+        
     }
 }
