@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +8,10 @@ public class Enemy : MonoBehaviour
     private int _HP = 1;
     private bool _canShoot = true;
 
-    public GameObject _EnemyBullet;
+    public event Action<int> OnEnemyDeath;
 
+    public GameObject _EnemyBullet;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.name == "Bullet(Clone)")
@@ -28,7 +31,7 @@ public class Enemy : MonoBehaviour
     {
         if (_canShoot)
         {
-            StartCoroutine(Shoot(Random.Range(2f, 8f)));
+            StartCoroutine(Shoot(UnityEngine.Random.Range(2f, 8f)));
         }
     }
 
@@ -39,5 +42,10 @@ public class Enemy : MonoBehaviour
         GameObject currentBullet = Instantiate(_EnemyBullet, transform);
         currentBullet.transform.parent = null;
         _canShoot = true;
+    }
+
+    void StartDeath()
+    {
+        OnEnemyDeath?.Invoke(10);
     }
 }
