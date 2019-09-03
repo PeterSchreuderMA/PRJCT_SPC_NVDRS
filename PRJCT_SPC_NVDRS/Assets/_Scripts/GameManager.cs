@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject currentSpawn = Instantiate(_enemy, thisWave.transform);
                 currentSpawn.transform.localPosition = new Vector3(
-                    -(_waves[_waveNumber - 1]._xAmount / 2) + (j * _waves[_waveNumber - 1]._xAmount/ _waves[_waveNumber - 1]._xAmount),
+                    (-(_waves[_waveNumber - 1]._xAmount / 2) + (j * _waves[_waveNumber - 1]._xAmount/ _waves[_waveNumber - 1]._xAmount) * 1.4f),
                     -(_waves[_waveNumber - 1]._yAmount / 2) + (i  * _waves[_waveNumber - 1]._yAmount/ _waves[_waveNumber - 1]._yAmount),
                     0);
             }
