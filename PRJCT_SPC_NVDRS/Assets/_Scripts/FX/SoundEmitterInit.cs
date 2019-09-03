@@ -19,7 +19,7 @@ public class SoundEmitterInit : MonoBehaviour
     float _volume = 1;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //- Add the audio source
         _audioSource = gameObject.AddComponent<AudioSource>();
@@ -27,7 +27,7 @@ public class SoundEmitterInit : MonoBehaviour
 
     public void PlaySound()
     {
-        _audioSource.PlayOneShot(_audioClip, 1f);
+        _audioSource.PlayOneShot(_audioClip, _volume);
     }
 
     //- Testing

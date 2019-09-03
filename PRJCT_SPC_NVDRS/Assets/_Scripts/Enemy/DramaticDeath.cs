@@ -16,23 +16,24 @@ public class DramaticDeath : MonoBehaviour
 
     public void StartDeath()
     {
-        StartCoroutine(DeathAnimation());
+        CreateExplosion();
+        //StartCoroutine(DeathAnimation());
     }
 
     private IEnumerator DeathAnimation()
     {
-        CreateExplosion();
-
-        yield return new WaitForSeconds(1f);
-
-        Destroy(gameObject);
+        yield return new WaitForSeconds(0.01f);
     }
 
     void CreateExplosion()
     {
         //- Play the explosion effect
-        soundEmitter.PlaySound();
         GameObject _expl = Instantiate<GameObject>(_explosionEffect);
         _expl.transform.position = gameObject.transform.position;
+        _expl.gameObject.GetComponent<SoundEmitterInit>().PlaySound();
+        Destroy(_expl, 5f);
+
+        //- Destroy self
+        Destroy(gameObject);
     }
 }
