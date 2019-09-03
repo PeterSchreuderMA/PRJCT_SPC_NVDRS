@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74184ac3cbca9c440ac150ae1adab3cd, type: 3}
   m_Name: Wave1
   m_EditorClassIdentifier: 
-  _yAmount: 3
-  _xAmount: 7
+  _yAmount: 5
+  _xAmount: 11

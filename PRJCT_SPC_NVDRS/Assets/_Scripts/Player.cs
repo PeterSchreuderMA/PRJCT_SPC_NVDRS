@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     {
         if(other.name == "EnemyBullet(Clone)")
         {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().PlayerDied();
+            //GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().PlayerDied();
             StartCoroutine(DeathAnim());
         }
     }

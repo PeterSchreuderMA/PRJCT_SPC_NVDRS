@@ -32,21 +32,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
+    /*void Update()
     {
         if (_canShoot)
         {
             StartCoroutine(Shoot(UnityEngine.Random.Range(2f, 8f)));
         }
-    }
+    }*/
 
-    IEnumerator Shoot(float timer)
+    public void Shoot()
     {
-        _canShoot = false;
-        yield return new WaitForSeconds(timer);
+        //_canShoot = false;
         GameObject currentBullet = Instantiate(_EnemyBullet, transform);
         currentBullet.transform.parent = null;
-        _canShoot = true;
+        //_canShoot = true;
     }
 
     void StartDeath()

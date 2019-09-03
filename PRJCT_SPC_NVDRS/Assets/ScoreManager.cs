@@ -8,26 +8,42 @@ public class ScoreManager : MonoBehaviour
 {
     //- Score texts
     Text playerScoreText;
+    Text waveCounter;
+    Text waveCounterBest;
     Text highScoreText;
 
     int playerScore = 0;
+    int waveAmount = 1;
 
     //FindObjectOfType<Enemy>().OnEnemyDeath += AddScore;
 
     void Start()
     {
+
+        //- Init the scores
+        //- Player score
         playerScoreText = GameObject.FindGameObjectWithTag("PlayerScore").GetComponent<Text>();
+        waveCounter = GameObject.FindGameObjectWithTag("TextWaveCounter").GetComponent<Text>();
 
-        //- Init the highscore
+        //- Best wave
+        waveCounterBest = GameObject.FindGameObjectWithTag("TextWaveCounterBest").GetComponent<Text>();
+        UpdateText(waveCounterBest, "Best Wave\n" + PlayerPrefs.GetInt("BestWave", 0).ToString());
+
+        //- Highscore
         highScoreText = GameObject.FindGameObjectWithTag("HighScore").GetComponent<Text>();
-        highScoreText.text = "High Score\n" + PlayerPrefs.GetInt("HighScore", 0).ToString();
+        UpdateText(highScoreText, "High Score\n" + PlayerPrefs.GetInt("HighScore", 0).ToString());
     }
-
 
     public void AddScore(int _amount)
     {
         playerScore += _amount;
         UpdateText(playerScoreText, "Score\n" + playerScore.ToString());
+    }
+
+    public void WaveAmount(int _amount)
+    {
+        waveAmount = _amount;
+        UpdateText(waveCounter, "Wave\n" + waveAmount.ToString());
     }
 
     /// <summary>
@@ -37,6 +53,9 @@ public class ScoreManager : MonoBehaviour
     {
         if (playerScore > PlayerPrefs.GetInt("HighScore", 0))
             PlayerPrefs.SetInt("HighScore", playerScore);
+
+        if (waveAmount > PlayerPrefs.GetInt("BestWave", 1))
+            PlayerPrefs.SetInt("BestWave", waveAmount);
     }
 
     void UpdateText(Text _text, string _string)
