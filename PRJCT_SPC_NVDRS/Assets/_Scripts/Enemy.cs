@@ -5,14 +5,39 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private int _HP = 1;
+    private bool _canShoot = true;
+
+    public GameObject _EnemyBullet;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.name == "Bullet(Clone)")
         {
             Destroy(other.gameObject);
-            Destroy(gameObject);
-            GetComponentInParent<EnemyBase>().ChildDied();
+
+            _HP--;
+            if (_HP <=0)
+            {
+                Destroy(gameObject);
+                GetComponentInParent<EnemyBase>().ChildDied();
+            }
         }
+    }
+
+    void Update()
+    {
+        if (_canShoot)
+        {
+            StartCoroutine(Shoot(Random.Range(2, 10)));
+        }
+    }
+
+    IEnumerator Shoot(float timer)
+    {
+        _canShoot = false;
+        yield return new WaitForSeconds(timer);
+        GameObject currentBullet = Instantiate(_EnemyBullet, transform);
+        currentBullet.transform.parent = null;
+        _canShoot = true;
     }
 }

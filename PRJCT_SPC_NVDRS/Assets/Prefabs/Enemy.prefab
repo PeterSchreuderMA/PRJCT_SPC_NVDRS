@@ -152,3 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645c14fa2b21bc949860c111abe6cd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _EnemyBullet: {fileID: 5137241869503878119, guid: 6c6271232c0070a408b6952a27480eeb,
+    type: 3}

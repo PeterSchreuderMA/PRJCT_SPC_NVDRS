@@ -60,4 +60,18 @@ public class Player : MonoBehaviour
         _canShoot = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.name == "EnemyBullet(Clone)")
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().PlayerDied();
+            StartCoroutine(DeathAnim());
+        }
+    }
+
+    IEnumerator DeathAnim()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
+    }
 }
