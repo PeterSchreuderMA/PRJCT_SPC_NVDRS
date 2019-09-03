@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     {
         if (_canShoot)
         {
-            StartCoroutine(Shoot(Random.Range(2, 10)));
+            StartCoroutine(Shoot(Random.Range(2f, 8f)));
         }
     }
 
