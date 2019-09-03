@@ -21,10 +21,4 @@ public class EnemyBase : MonoBehaviour
     {
         print("Move");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

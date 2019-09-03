@@ -64,4 +64,9 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(WaveTimer());
     }
+
+    public void PlayerDied()
+    {
+        GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>().ChangeAllowInput(false);
+    }
 }
