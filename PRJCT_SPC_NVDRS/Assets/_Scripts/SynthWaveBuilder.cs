@@ -10,11 +10,14 @@ public class SynthWaveBuilder : MonoBehaviour
 
     public int _verticalOnesNeedend;
 
+    private bool _shouldZoomOut = true;
+
     // Start is called before the first frame update
     void Start()
     {
         SpawnVertical();
         SpawnHorizontal();
+        
     }
 
     void SpawnVertical()
@@ -38,6 +41,26 @@ public class SynthWaveBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (_shouldZoomOut)
+        {
+            Camera.main.fieldOfView += 3 * Time.deltaTime;
+            if (Camera.main.fieldOfView >= 80)
+            {
+                _shouldZoomOut = false;
+            }
+        }
+        else if (!_shouldZoomOut)
+        {
+            Camera.main.fieldOfView -= 3 * Time.deltaTime;
+            if (Camera.main.fieldOfView <= 30)
+            {
+                _shouldZoomOut = true;
+            }
+        }
+        Camera.main.transform.position += Vector3.right * Time.deltaTime;
+        if (Camera.main.transform.position.x >= 3)
+        {
+            Camera.main.transform.position -= Vector3.right * 3;
+        }
     }
 }
