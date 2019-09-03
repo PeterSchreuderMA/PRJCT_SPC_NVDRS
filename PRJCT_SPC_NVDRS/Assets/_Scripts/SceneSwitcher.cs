@@ -8,7 +8,7 @@ public class SceneSwitcher : MonoBehaviour
 {
     public bool _isButton = false;
 
-    private void Start()
+    private void Update()
     {
         if (_isButton)
         {
