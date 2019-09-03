@@ -24,11 +24,14 @@ public class DramaticDeath : MonoBehaviour
         CreateExplosion();
 
         yield return new WaitForSeconds(1f);
+
+        Destroy(gameObject);
     }
 
     void CreateExplosion()
     {
         //- Play the explosion effect
+        soundEmitter.PlaySound();
         GameObject _expl = Instantiate<GameObject>(_explosionEffect);
         _expl.transform.position = gameObject.transform.position;
     }

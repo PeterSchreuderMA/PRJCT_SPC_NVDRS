@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 656362436613779983}
   - component: {fileID: 2480358550616677689}
   - component: {fileID: 3207139615943816756}
+  - component: {fileID: 2376254326947767956}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -167,4 +168,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190efcb6c9d7221488ff8d6af53f9d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionEffect: {fileID: 0}
+  _explosionEffect: {fileID: 1226476423465174594, guid: c7302f7c65ada274dac882a40df7f459,
+    type: 3}
+--- !u!114 &2376254326947767956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7646524125570035532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868f4746f1ec3cd4aa6684ad27890c7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _debug: 0
+  _audioClip: {fileID: 8300000, guid: 6ce01ae718fe38a41aa82508295beb6b, type: 3}

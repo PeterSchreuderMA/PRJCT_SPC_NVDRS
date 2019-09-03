@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour
     public event Action<int> OnEnemyDeath;
 
     public GameObject _EnemyBullet;
+
+    void Start()
+    {
+        OnEnemyDeath += FindObjectOfType<ScoreManager>().AddScore;
+    }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -21,7 +26,7 @@ public class Enemy : MonoBehaviour
             _HP--;
             if (_HP <=0)
             {
-                Destroy(gameObject);
+                gameObject.GetComponent<DramaticDeath>().StartDeath();
                 GetComponentInParent<EnemyBase>().ChildDied();
             }
         }

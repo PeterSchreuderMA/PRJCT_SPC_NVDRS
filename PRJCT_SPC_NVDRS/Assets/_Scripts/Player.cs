@@ -16,9 +16,13 @@ public class Player : MonoBehaviour
     public GameObject _bullet;
     private bool _canShoot = true;
 
+    // Sound
+    private SoundEmitterInit _soundEmitter;
+
     private void Start()
     {
         _input = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
+        _soundEmitter = gameObject.GetComponent<SoundEmitterInit>();
 
         _speed = 5;
     }
@@ -52,6 +56,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator Shoot()
     {
+        _soundEmitter.PlaySound();
         _canShoot = false;
         GameObject currentBullet = Instantiate(_bullet, transform);
         currentBullet.transform.parent = null;

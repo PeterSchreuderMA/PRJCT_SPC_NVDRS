@@ -7,11 +7,16 @@ public class SoundEmitterInit : MonoBehaviour
 {
     AudioSource _audioSource;
 
+
     [SerializeField]
     bool _debug = false;
 
     [SerializeField]
     AudioClip _audioClip;
+
+    [SerializeField]
+    [Range(0, 1)]
+    float _volume = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +25,9 @@ public class SoundEmitterInit : MonoBehaviour
         _audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void PlaySound(AudioClip _source)
+    public void PlaySound()
     {
-        _audioSource.PlayOneShot(_source, 1f);
+        _audioSource.PlayOneShot(_audioClip, 1f);
     }
 
     //- Testing
@@ -30,7 +35,7 @@ public class SoundEmitterInit : MonoBehaviour
     {
         if (_debug && Input.anyKeyDown)
         {
-            PlaySound(_audioClip);
+            PlaySound();
         }
     }
 }
