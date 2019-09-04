@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public event Action OnPlayerDeath;
+    public event Action OnGameOver;
 
     public event Action<int> WaveAmount;
 
@@ -51,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EnemyShootTimer()
     {
+        _enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
         int _index = (int)Mathf.Round(UnityEngine.Random.Range(0, _enemies.Length));
         _enemies[_index].GetComponent<Enemy>().Shoot();
 
@@ -63,23 +66,29 @@ public class GameManager : MonoBehaviour
         _waveNumber++;
         WaveAmount?.Invoke(_waveNumber);
         GameObject thisWave = Instantiate(_enemyBase);
-        thisWave.transform.position = new Vector3(0, 2);
+        thisWave.transform.position = new Vector2(0, 2);
+
         float _distanceBetween = 1.46f;
-        int _minDex = 0;
-        for (int j = 0; j < _waves[_waveNumber - 1]._xAmount; j++)
+        int _index = _waveNumber;
+
+
+        for (int j = 0; j < _waves[_index]._xAmount; j++)
         {
-            for (int i = 0; i < _waves[_waveNumber - 1]._yAmount; i++)
+            for (int i = 0; i < _waves[_index]._yAmount; i++)
             {
                 GameObject currentSpawn = Instantiate(_enemy, thisWave.transform);
-                currentSpawn.transform.localPosition = new Vector3(
-                    (-(_waves[_waveNumber - _minDex]._xAmount / 2) + (j * _waves[_waveNumber - _minDex]._xAmount / _waves[_waveNumber - _minDex]._xAmount) * _distanceBetween),
-                    -(_waves[_waveNumber - _minDex]._yAmount / 2) + (i * _waves[_waveNumber - _minDex]._yAmount / _waves[_waveNumber - _minDex]._yAmount),
+
+                currentSpawn.transform.localPosition = new Vector3
+                    (
+                    (-(_waves[_index]._xAmount / 2) + (j * _waves[_index]._xAmount / _waves[_index]._xAmount)) * _distanceBetween,// 
+                    -(_waves[_index]._yAmount / 2) + (i * _waves[_index]._yAmount / _waves[_index]._yAmount),
                     0);
             }
         }
-        thisWave.GetComponent<EnemyBase>().ChildrenAmount = _waves[_waveNumber - _minDex]._xAmount * _waves[_waveNumber - _minDex]._yAmount;
+        thisWave.GetComponent<EnemyBase>().ChildrenAmount = _waves[_index]._xAmount * _waves[_index]._yAmount;
+
         _enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        StartCoroutine(EnemyShootTimer());
+        StartCoroutine(EnemyShootTimer());//- Let them shoot
     }
 
     public void NextWaveCaller()
@@ -88,18 +97,29 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaveTimer());
     }
 
-    public void PlayerDied()
+    public void GameOver()
     {
+        GetComponent<SoundEmitterInit>().PlaySound();
+
+        OnGameOver?.Invoke();
         print("Gameover");
         GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>().SaveHighScore();
         GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>().ChangeAllowInput(false);
+        StartCoroutine(RestartGame());
     }
 
     IEnumerator RestartGame()
     {
-        _upcommingWaveText.text = "Game Over";
-        yield return new WaitForSeconds(3f);
-        GetComponent<SceneSwitcher>().ChangeScene("Game");
+        int _score = GameObject.FindObjectOfType<ScoreManager>().playerScore;
+
+        if (_score < PlayerPrefs.GetInt("HighScore", 0))
+            _upcommingWaveText.text = "Game Over\nScore: " + _score.ToString();
+        else
+            _upcommingWaveText.text = "Game Over\nNew Highscore\nScore: " + _score.ToString();
+
+
+        yield return new WaitForSeconds(6f);
+        GetComponent<SceneSwitcher>().ChangeScene("Menu");
     }
 
 }

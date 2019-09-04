@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,12 +10,16 @@ public class Enemy : MonoBehaviour
     private bool _canShoot = true;
 
     public event Action<int> OnEnemyDeath;
+    public event Action OnReachGround;
 
     public GameObject _EnemyBullet;
 
     void Start()
     {
         OnEnemyDeath += FindObjectOfType<ScoreManager>().AddScore;
+        FindObjectOfType<Player>().OnPlayerDeath += StopShoot;
+        FindObjectOfType<GameManager>().OnGameOver += StopShoot;
+        OnReachGround += FindObjectOfType<GameManager>().GameOver;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,6 +35,13 @@ public class Enemy : MonoBehaviour
                 GetComponentInParent<EnemyBase>().ChildDied();
             }
         }
+
+        if (other.gameObject.name == "Ground")
+        {
+            OnReachGround?.Invoke();
+            //GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GameOver();
+            UnSubscribe();
+        }
     }
 
     /*void Update()
@@ -40,17 +52,33 @@ public class Enemy : MonoBehaviour
         }
     }*/
 
+    public void StopShoot()
+    {
+        _canShoot = false;
+    }
+
     public void Shoot()
     {
-        //_canShoot = false;
-        GameObject currentBullet = Instantiate(_EnemyBullet, transform);
-        currentBullet.transform.parent = null;
-        //_canShoot = true;
+        if (_canShoot)
+        {
+            GameObject currentBullet = Instantiate(_EnemyBullet, transform);
+            currentBullet.transform.parent = null;
+        }
+    }
+
+    void UnSubscribe()
+    {
+        OnEnemyDeath -= FindObjectOfType<ScoreManager>().AddScore;
+        FindObjectOfType<Player>().OnPlayerDeath -= StopShoot;
+        OnReachGround -= FindObjectOfType<GameManager>().GameOver;
     }
 
     void StartDeath()
     {
         gameObject.GetComponent<DramaticDeath>().StartDeath();
+        //CameraShaker.Instance.ShakeOnce(1, 1, 1, 1);
         OnEnemyDeath?.Invoke(10);
+
+        UnSubscribe();
     }
 }

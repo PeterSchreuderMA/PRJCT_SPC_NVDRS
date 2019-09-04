@@ -9,7 +9,10 @@
     <sprite>sprites\Concept_Board</sprite>
     <sprite>sprites\Enemy_Ship_01</sprite>
     <sprite>sprites\Player_Bullet</sprite>
+    <sprite>sprites\Enemy_Bullet</sprite>
     <sprite>sprites\Player_Railcannon</sprite>
+    <sprite>sprites\Rail</sprite>
+    <sprite>sprites\Player_Bullet_Casing</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

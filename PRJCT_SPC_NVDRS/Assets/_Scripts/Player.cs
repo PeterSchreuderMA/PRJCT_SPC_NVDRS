@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     // Fire
     public GameObject _bullet;
     private bool _canShoot = true;
+    private ParticleSystem particleSystem;
 
     // Sound
     private SoundEmitterInit _soundEmitter;
@@ -28,7 +29,9 @@ public class Player : MonoBehaviour
         _soundEmitter = gameObject.GetComponent<SoundEmitterInit>();
         _dramaticDeath = gameObject.GetComponent<DramaticDeath>();
 
-        OnPlayerDeath += GameObject.FindObjectOfType<GameManager>().PlayerDied;
+        OnPlayerDeath += GameObject.FindObjectOfType<GameManager>().GameOver;
+
+        particleSystem = GetComponent<ParticleSystem>();
 
         _speed = 5;
     }
@@ -49,7 +52,8 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        transform.position += new Vector3(_speed * _horizontal, 0, 0) * Time.deltaTime;
+        if ((_horizontal < 0 && transform.position.x > -8) || (_horizontal > 0 && transform.position.x < 8))
+            transform.position += new Vector3(_speed * _horizontal, 0, 0) * Time.deltaTime;
     }
 
     private void Fire()
@@ -67,6 +71,8 @@ public class Player : MonoBehaviour
         GameObject currentBullet = Instantiate(_bullet, transform);
         currentBullet.transform.parent = null;
         currentBullet.transform.position += Vector3.up * .5f;
+        particleSystem.Play();
+        //particleSystem.Stop();
         yield return new WaitForSeconds(0.3f);
         _canShoot = true;
     }
@@ -82,6 +88,10 @@ public class Player : MonoBehaviour
 
     IEnumerator DeathAnim()
     {
+        Time.timeScale = 0.000001f;
+        yield return new WaitForSeconds(1f * Time.timeScale);
+        Time.timeScale = 1;
+
         _dramaticDeath.StartDeath();
         OnPlayerDeath?.Invoke();
         yield return new WaitForSeconds(0.01f);

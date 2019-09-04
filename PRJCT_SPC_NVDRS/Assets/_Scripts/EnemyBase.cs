@@ -6,8 +6,22 @@ public class EnemyBase : MonoBehaviour
 {
     private int _childrenAmount; public int ChildrenAmount { get => _childrenAmount; set => _childrenAmount = value; }
 
+    [Range(0, 3)]
+    public float _speedMulti = 1;
+
     private bool _movingRight = true;
-    private float _speed = 1f;
+    private float _speedStart = 0.2f, _speed = 0.2f;
+    private bool _canMove = true;
+
+    void Start()
+    {
+        FindObjectOfType<GameManager>().OnGameOver += StopMove;
+    }
+
+    public void StopMove()
+    {
+        _canMove = false;
+    }
 
     public void ChildDied()
     {
@@ -17,20 +31,26 @@ public class EnemyBase : MonoBehaviour
             Destroy(this.gameObject);
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().NextWaveCaller();
         }
-        print(_childrenAmount);
-        _speed += 0.05f;
-        if (_childrenAmount <=3)
+        //print(_childrenAmount);
+        _speed += 0.028f;
+
+        if (_childrenAmount <= 3)
         {
             if (_childrenAmount == 1)
             {
-                _speed += 1f;
+                _speed += _speedStart * 2;
             }
-            _speed += 0.7f;
+            _speed += _speedStart;
         }
     }
 
     private void Update()
     {
+        if (!_canMove)
+            return;
+
+        _speed = _speed * _speedMulti;
+
         if (_movingRight)
         {
             transform.position += Vector3.right * _speed * Time.deltaTime;
@@ -42,7 +62,7 @@ public class EnemyBase : MonoBehaviour
         }
         else if (!_movingRight)
         {
-            transform.position += Vector3.right * -_speed * Time.deltaTime;
+            transform.position -= Vector3.right * _speed * Time.deltaTime;
             if (transform.position.x < -1.5f)
             {
                 _movingRight = !_movingRight;

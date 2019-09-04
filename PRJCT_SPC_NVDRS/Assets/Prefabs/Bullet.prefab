@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 6151739912193724391}
   - component: {fileID: 6583403101591676611}
   - component: {fileID: 4550431805545369953}
+  - component: {fileID: 7203240070689145157}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: BulletPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936cfc34eef807749aa7d298d1cf0456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _speed: 15
 --- !u!114 &1111934967354377993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,3 +159,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.05, y: 0.07}
   m_EdgeRadius: 0
+--- !u!114 &7203240070689145157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137241869503878119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d08cdbc42aa4234283f4e88ee966828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTag: BulletEnemy
+  destroyTime: 0

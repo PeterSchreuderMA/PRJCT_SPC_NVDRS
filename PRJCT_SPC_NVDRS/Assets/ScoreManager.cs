@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour
     Text waveCounterBest;
     Text highScoreText;
 
-    int playerScore = 0;
+    public int playerScore = 0;
     int waveAmount = 1;
 
     //FindObjectOfType<Enemy>().OnEnemyDeath += AddScore;

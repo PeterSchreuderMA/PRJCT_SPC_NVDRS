@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 6583403101591676611}
   - component: {fileID: 4550431805545369953}
   - component: {fileID: -1107524498893535740}
+  - component: {fileID: 4636983873668586763}
   m_Layer: 0
   m_Name: EnemyBullet
-  m_TagString: Untagged
+  m_TagString: BulletEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97df08aa0491f6c41a8cffbcf55288c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 3
+  timer: 7
 --- !u!50 &6151739912193724391
 Rigidbody2D:
   serializedVersion: 4
@@ -108,10 +109,10 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3b16f9252e266084cbfc6c072bca0bb1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 472dada579d346f41b31c04a0cd99f63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.08, y: 0.08}
   m_AdaptiveModeThreshold: 0.5
@@ -132,18 +133,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.005}
+  m_Offset: {x: 0, y: -0.035386033}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.08, y: 0.08}
+    oldSize: {x: 0.04, y: 0.14}
     newSize: {x: 0.08, y: 0.08}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.04, y: 0.07}
+  m_Size: {x: 0.04, y: 0.06956346}
   m_EdgeRadius: 0
 --- !u!114 &-1107524498893535740
 MonoBehaviour:
@@ -157,4 +158,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936cfc34eef807749aa7d298d1cf0456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: -3
+  _speed: -2
+--- !u!114 &4636983873668586763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137241869503878119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d08cdbc42aa4234283f4e88ee966828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectTag: BulletPlayer
+  destroyTime: 0
